@@ -1,0 +1,87 @@
+Setup Terraform:
+	Install Terraform
+
+
+	Setup Azure
+az login
+az account list
+
+{
+    "cloudName": "AzureCloud",
+    "homeTenantId": "<YOUR_TENANT_ID>",
+    "id": "<YOUR_SUBSCRIPTION_ID>",
+    "isDefault": true,
+    "managedByTenants": [],
+    "name": "Azure subscription 1",
+    "state": "Enabled",
+    "tenantDefaultDomain": "aiopsoneokgmail.onmicrosoft.com",
+    "tenantDisplayName": "Default Directory",
+    "tenantId": "<YOUR_TENANT_ID>",
+    "user": {
+      "name": "aiopsoneok@gmail.com",
+      "type": "user"
+    }
+  }
+]
+Set Subscription ID:
+az account set --subscription "<YOUR_SUBSCRIPTION_ID>"
+
+Create a Service Principal
+Next, create a Service Principal. A Service Principal is an application within Azure Active Directory with the authentication tokens Terraform needs to perform actions on your behalf. 
+Update the <SUBSCRIPTION_ID> with the subscription ID you specified in the previous step.
+
+a
+
+
+z ad sp create-for-rbac --name "terraform" --role="Contributor" --scopes="/subscriptions/<YOUR_SUBSCRIPTION_ID>"
+Creating 'Contributor' role assignment under scope '/subscriptions/<YOUR_SUBSCRIPTION_ID>'
+The output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. For more information, see https: //aka.ms/azadsp-cli
+{
+    "appId": "<YOUR_APP_ID>",
+    "displayName": "terraform",
+    "password": "<YOUR_CLIENT_SECRET>",
+    "tenant": "<YOUR_TENANT_ID>"
+
+}
+
+
+az ad sp create-for-rbac --name "terraform" --role="Contributor" --scopes="/subscriptions/<YOUR_SUBSCRIPTION_ID>"
+
+az ad sp create-for-rbac --name "terraform" --role="Contributor" --scopes="/subscriptions/<YOUR_SUBSCRIPTION_ID>"
+Creating 'Contributor' role assignment under scope '/subscriptions/<YOUR_SUBSCRIPTION_ID>'
+The output includes credentials that you must protect. Be sure that you do not include these credentials in your code or check the credentials into your source control. For more information, see https: //aka.ms/azadsp-cli
+{
+    "appId": "<YOUR_APP_ID>",
+    "displayName": "terraform",
+    "password": "<YOUR_CLIENT_SECRET>",
+    "tenant": "<YOUR_TENANT_ID>"
+
+}
+
+export ARM_CLIENT_ID="<APPID_VALUE>"
+export ARM_CLIENT_SECRET="<PASSWORD_VALUE>"
+export ARM_SUBSCRIPTION_ID="<SUBSCRIPTION_ID>"
+export ARM_TENANT_ID="<TENANT_VALUE>"
+
+
+export ARM_CLIENT_ID="<YOUR_APP_ID>"
+export ARM_CLIENT_SECRET="<YOUR_CLIENT_SECRET>"
+export ARM_SUBSCRIPTION_ID="<YOUR_SUBSCRIPTION_ID>"
+export ARM_TENANT_ID="<YOUR_TENANT_ID>"
+
+
+mkdir learn-terraform-azure
+cd learn-terraform-azure
+
+terraform init
+terraform plan
+terraform apply
+
+
+
+
+
+
+Ref: https://learn.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-list-locations   
+
+
